@@ -36,6 +36,19 @@ disp("El angulo theta_1 es de:")
 disp(rad2deg(q1))
 disp("El angulo theta_2 es de:")
 disp(rad2deg(q2))
+
+%% Versión presentación del mecanismo:
+L(1) = Link('revolute','alpha', 0,    'a',0 ,   'd',0,  'offset', 0,   'modified', 'qlim',[-pi pi]);
+L(2) = Link('revolute','alpha', 0,    'a',l1,   'd',0,  'offset', 0,   'modified', 'qlim',[-pi pi]);
+mecanismo = SerialLink(L,'name','mecanismo');
+mecanismo.tool = [0 0 1 l2;
+                  1 0 0 0;
+                  0 1 0 0;
+                  0 0 0 1];
+mecanismo.teach;              
+
+
+
 %%
 function [q1,q2] = hallar_sol(x,y,l1,l2,codo)
 % Función para hallar la posición angular que debe adoptar el mecanismo
