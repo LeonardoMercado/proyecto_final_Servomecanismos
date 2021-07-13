@@ -7,8 +7,10 @@ close all;
 
 %--------------------------------------------------------------------------
 % Realizando el trébol:
-t = 0:0.001:2*pi; % Paso
-trebol = 4;
+t = 0:0.001:2*pi; % Paso en posición
+paso_trebol_normal = 0.001744112:0.001744112:10.96; % pasos en tiempo
+paso_trebol_expandido = 0.002278803:0.002278803:14.32;
+trebol = 1;
 % trebol 1 = Trébol 15 cm a 0°
 % trebol 2 = Trébol 15 cm a 45°
 % trebol 3 = Trébol 19.5 cm a 0°
@@ -17,18 +19,26 @@ trebol = 4;
 if(trebol == 1)
     x1 = (0.075*cos(t)-0.012*cos(5*t))+0.382;
     y1 = (0.075*sin(t)-0.012*sin(5*t))+0.204;
+    paso = paso_trebol_normal;
+    paso_unitario = 0.001744112;
     texto = "Trébol 15 cm a 0°";
 elseif(trebol == 2)
     x1 = 0.075*cos(t)-0.012*cos(5*t+pi)+0.382;
     y1 = 0.075*sin(t)-0.012*sin(5*t+pi)+0.204;
+    paso = paso_trebol_normal;
+    paso_unitario = 0.001744112;
     texto = "Trébol 15 cm a 45°";
 elseif(trebol == 3)
     x1 = 0.0975*cos(t)-0.0135*cos(5*t)+0.382;
     y1 = 0.0975*sin(t)-0.0135*sin(5*t)+0.204;
+    paso = paso_trebol_expandido;
+    paso_unitario = 0.002278803;
     texto = "Trébol 19.5 cm a 0°";
 elseif(trebol == 4)
     x1 = 0.0975*cos(t)-0.0135*cos(5*t+pi)+0.382;
     y1 = 0.0975*sin(t)-0.0135*sin(5*t+pi)+0.204;
+    paso = paso_trebol_expandido;
+    paso_unitario = 0.002278803;
     texto = "Trébol 19.5 cm a 45°";
 else
     msgbox("No selecciono ningun trébol.","Error","error")
@@ -82,19 +92,126 @@ i = length(x);
 t_q1 = zeros(i,1);
 t_q2 = zeros(i,1);
 for c = 1:length(x)
+    % Movimiento articular:
     [t_q1(c),t_q2(c)] = hallar_sol(x(c),y(c),l1,l2,1);
-    mecanismo.plot([t_q1(c) t_q2(c)])    
 end
-%%
-tg = jtraj([posicion_arranque_x posicion_arranque_y],[t_q1(1) t_q2(1)],2);
-mecanismo.plot(tg)
-for c = 2:length(x)
-    tg = jtraj([tg(end,end-1) tg(end,end-1)],[t_q1(c) t_q2(c)],2);
+% Observando la trayectoria cada 100 pasos:
+for c = 1:100:length(x)
+    mecanismo.plot([t_q1(c) t_q2(c)]); 
 end
+%% Sacando las curvas:
 
-%%
+% Articulación q1:
+figure(2)
+plot(paso,t_q1,'r','LineWidth',1.5);
+grid on;
+title("\theta_{1} vs tiempo",'FontSize',14);
+xlabel("Tiempo [s]",'FontSize',12);
+ylabel("\theta_{1} [rad]",'FontSize',12);
+axis([paso(1) paso(end) min(t_q1) max(t_q1)])
 
-mecanismo.plot([t_q1(3000) t_q2(3000)])
+% Articulación q2:
+figure(3)
+plot(paso,t_q2,'b','LineWidth',1.5);
+grid on;
+title("\theta_{2} vs tiempo",'FontSize',14);
+xlabel("Tiempo [s]",'FontSize',12);
+ylabel("\theta_{2} [rad]",'FontSize',12);
+axis([paso(1) paso(end) min(t_q2) max(t_q2)])
+
+% Articulaciones:
+figure(4)
+plot(paso,t_q2,'b','LineWidth',1.5);
+hold on;
+plot(paso,t_q1,'r','LineWidth',1.5);
+grid on;
+title("\theta vs tiempo",'FontSize',14);
+xlabel("Tiempo [s]",'FontSize',12);
+ylabel("\theta [rad]",'FontSize',12);
+legend('\theta_{2}','\theta_{1}');
+xlim([paso(1) paso(end)])
+
+%% Derivando
+
+% Velocidad angular articulación 1: 
+omega_q1 = diff(t_q1)/paso_unitario;
+omega_q1(3141) = -0.0297;
+figure(5)
+plot(paso(1:end-1),omega_q1,'b','LineWidth',1.5);
+grid on;
+title("\omega_{1} vs tiempo",'FontSize',14);
+xlabel("Tiempo [s]",'FontSize',12);
+ylabel("\omega [rad/s]",'FontSize',12);
+xlim([paso(1) paso(end-1)])
+
+% Velocidad angular articulación 2: 
+omega_q2 = diff(t_q2)/paso_unitario;
+omega_q2(3141) = 0.0209;
+figure(6)
+plot(paso(1:end-1),omega_q2,'b','LineWidth',1.5);
+grid on;
+title("\omega_{2} vs tiempo",'FontSize',14);
+xlabel("Tiempo [s]",'FontSize',12);
+ylabel("\omega [rad/s]",'FontSize',12);
+xlim([paso(1) paso(end-1)])
+
+% Aceleración angular articulación 1: 
+alfa_q1 = diff(omega_q1)/paso_unitario;
+alfa_q1(3140) = 0.1951;
+alfa_q1(3141) = 0.1933;
+figure(7)
+plot(paso(1:end-2),alfa_q1,'b','LineWidth',1.5);
+grid on;
+title("\alpha_{1} vs tiempo",'FontSize',14);
+xlabel("Tiempo [s]",'FontSize',12);
+ylabel("\alpha [rad/s^2]",'FontSize',12);
+xlim([paso(1) paso(end-2)])
+
+% Aceleración angular articulación 2: 
+alfa_q2 = diff(omega_q2)/paso_unitario;
+alfa_q2(3140) = -0.3942;
+alfa_q2(3141) = -0.3934;
+figure(8)
+plot(paso(1:end-2),alfa_q2,'b','LineWidth',1.5);
+grid on;
+title("\alpha_{2} vs tiempo",'FontSize',14);
+xlabel("Tiempo [s]",'FontSize',12);
+ylabel("\alpha [rad/s^2]",'FontSize',12);
+xlim([paso(1) paso(end-2)])
+
+% Sobre Aceleración angular articulación 1: 
+jerk_q1 = diff(alfa_q1)/paso_unitario;
+jerk_q1(3139) = -0.923;
+jerk_q1(3140) = -0.926;
+jerk_q1(3141) = -0.929;
+figure(9)
+plot(paso(1:end-3),jerk_q1,'b','LineWidth',1.5);
+grid on;
+title("jerk 1 vs tiempo",'FontSize',14);
+xlabel("Tiempo [s]",'FontSize',12);
+ylabel("jerk [rad/s^3]",'FontSize',12);
+xlim([paso(1) paso(end-3)]);
+
+% Sobre Aceleración angular articulación 2: 
+jerk_q2 = diff(alfa_q2)/paso_unitario;
+figure(10)
+plot(paso(1:end-3),jerk_q2,'b','LineWidth',1.5);
+grid on;
+title("jerk 2 vs tiempo",'FontSize',14);
+xlabel("Tiempo [s]",'FontSize',12);
+ylabel("jerk [rad/s^3]",'FontSize',12);
+xlim([paso(1) paso(end-3)]);
+
+
+
+
+
+
+
+
+
+
+
 
 
 
