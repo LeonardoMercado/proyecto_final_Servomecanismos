@@ -8,9 +8,9 @@ close all;
 %--------------------------------------------------------------------------
 % Realizando el trébol:
 t = 0:0.001:2*pi; % Paso en posición
-paso_trebol_normal = 0.001744112:0.001744112:10.96; % pasos en tiempo
-paso_trebol_expandido = 0.002278803:0.002278803:14.32;
-trebol = 1;
+paso_trebol_normal = 0:0.001744112:10.96; % pasos en tiempo
+paso_trebol_expandido = 0:0.002278803:14.32;
+trebol = 4;
 % trebol 1 = Trébol 15 cm a 0°
 % trebol 2 = Trébol 15 cm a 45°
 % trebol 3 = Trébol 19.5 cm a 0°
@@ -75,13 +75,13 @@ tg = jtraj(home,[posicion_arranque_x posicion_arranque_y],7);
 mecanismo.plot(tg);
 
 %% Trayectoria del trebol:
-x_aux_1 = x1(1:end/2-1);
+x_aux_1 = x1(1:end/2);
 x_aux_2 = x1(end/2:end);
 x_aux_1 = fliplr(x_aux_1);
 x_aux_2 = fliplr(x_aux_2);
 x = [x_aux_1 x_aux_2];
 %-------------------------
-y_aux_1 = y1(1:end/2-1);
+y_aux_1 = y1(1:end/2);
 y_aux_2 = y1(end/2:end);
 y_aux_1 = fliplr(y_aux_1);
 y_aux_2 = fliplr(y_aux_2);
@@ -135,7 +135,7 @@ xlim([paso(1) paso(end)])
 
 % Velocidad angular articulación 1: 
 omega_q1 = diff(t_q1)/paso_unitario;
-omega_q1(3141) = -0.0297;
+omega_q1(3142) = -0.2522;
 figure(5)
 plot(paso(1:end-1),omega_q1,'b','LineWidth',1.5);
 grid on;
@@ -146,7 +146,7 @@ xlim([paso(1) paso(end-1)])
 
 % Velocidad angular articulación 2: 
 omega_q2 = diff(t_q2)/paso_unitario;
-omega_q2(3141) = 0.0209;
+omega_q2(3142) = 0.2012;
 figure(6)
 plot(paso(1:end-1),omega_q2,'b','LineWidth',1.5);
 grid on;
@@ -157,8 +157,7 @@ xlim([paso(1) paso(end-1)])
 
 % Aceleración angular articulación 1: 
 alfa_q1 = diff(omega_q1)/paso_unitario;
-alfa_q1(3140) = 0.1951;
-alfa_q1(3141) = 0.1933;
+alfa_q1(3141) = -0.2511;
 figure(7)
 plot(paso(1:end-2),alfa_q1,'b','LineWidth',1.5);
 grid on;
@@ -167,10 +166,11 @@ xlabel("Tiempo [s]",'FontSize',12);
 ylabel("\alpha [rad/s^2]",'FontSize',12);
 xlim([paso(1) paso(end-2)])
 
+
 % Aceleración angular articulación 2: 
 alfa_q2 = diff(omega_q2)/paso_unitario;
-alfa_q2(3140) = -0.3942;
-alfa_q2(3141) = -0.3934;
+alfa_q2(3141) = 0.4646;
+alfa_q2(3142) = 0.4642;
 figure(8)
 plot(paso(1:end-2),alfa_q2,'b','LineWidth',1.5);
 grid on;
@@ -180,39 +180,94 @@ ylabel("\alpha [rad/s^2]",'FontSize',12);
 xlim([paso(1) paso(end-2)])
 
 % Sobre Aceleración angular articulación 1: 
-jerk_q1 = diff(alfa_q1)/paso_unitario;
-jerk_q1(3139) = -0.923;
-jerk_q1(3140) = -0.926;
-jerk_q1(3141) = -0.929;
-figure(9)
-plot(paso(1:end-3),jerk_q1,'b','LineWidth',1.5);
+% jerk_q1 = diff(alfa_q1)/paso_unitario;
+% jerk_q1(3139) = -0.923;
+% jerk_q1(3140) = -0.926;
+% jerk_q1(3141) = -0.929;
+% figure(9)
+% plot(paso(1:end-3),jerk_q1,'b','LineWidth',1.5);
+% grid on;
+% title("jerk 1 vs tiempo",'FontSize',14);
+% xlabel("Tiempo [s]",'FontSize',12);
+% ylabel("jerk [rad/s^3]",'FontSize',12);
+% xlim([paso(1) paso(end-3)]);
+% 
+% % Sobre Aceleración angular articulación 2: 
+% jerk_q2 = diff(alfa_q2)/paso_unitario;
+% figure(10)
+% plot(paso(1:end-3),jerk_q2,'b','LineWidth',1.5);
+% grid on;
+% title("jerk 2 vs tiempo",'FontSize',14);
+% xlabel("Tiempo [s]",'FontSize',12);
+% ylabel("jerk [rad/s^3]",'FontSize',12);
+% xlim([paso(1) paso(end-3)]);
+
+%% Torques:
+
+j1 = 0.00024769; % kg m^2
+j2 = 0.00086777; % kg m^2
+
+% Torque inerciales q1:
+figure(11)
+torque_inercial_q1 = j1*alfa_q1;
+plot(paso(1:end-2),alfa_q1,'b','LineWidth',1.5);
 grid on;
-title("jerk 1 vs tiempo",'FontSize',14);
+title("\tau_{inercial1} vs tiempo",'FontSize',14);
 xlabel("Tiempo [s]",'FontSize',12);
-ylabel("jerk [rad/s^3]",'FontSize',12);
-xlim([paso(1) paso(end-3)]);
+ylabel("\tau [Nm]",'FontSize',12);
+xlim([paso(1) paso(end-2)])
 
-% Sobre Aceleración angular articulación 2: 
-jerk_q2 = diff(alfa_q2)/paso_unitario;
-figure(10)
-plot(paso(1:end-3),jerk_q2,'b','LineWidth',1.5);
+
+% Torque inercial q2:
+figure(12)
+torque_inercial_q2 = j2*alfa_q2;
+plot(paso(1:end-2),alfa_q2,'b','LineWidth',1.5);
 grid on;
-title("jerk 2 vs tiempo",'FontSize',14);
+title("\tau_{inercial2} vs tiempo",'FontSize',14);
 xlabel("Tiempo [s]",'FontSize',12);
-ylabel("jerk [rad/s^3]",'FontSize',12);
-xlim([paso(1) paso(end-3)]);
+ylabel("\tau [Nm]",'FontSize',12);
+xlim([paso(1) paso(end-2)])
+
+% Torques de fricción q1 y q2:
+torque_friccion_q1 = ones(length(torque_inercial_q1),1)*max(torque_inercial_q1)*0.01;
+torque_friccion_q2 = ones(length(torque_inercial_q2),1)*max(torque_inercial_q2)*0.01;
+
+% Torque Gravitacional:
+m1 = 0.01342415; % kg
+m2 = 0.02008596; % kg
+torque_g_q1 = ones(length(torque_inercial_q1),1)*(l1/2)*(m1*9.81);
+torque_g_q2 = ones(length(torque_inercial_q2),1)*(l2/2)*(m2*9.81);
 
 
+% Toque total: Torque inercial + Torque de Fricción + Torque gravitacional:
+torque_q1 = torque_inercial_q1+torque_friccion_q1+torque_g_q1;
+torque_q2 = torque_inercial_q2+torque_friccion_q2+torque_g_q2;
 
+figure(13)
+plot(paso(1:end-2),torque_q1,'r','LineWidth',1.5);
+grid on;
+title("\tau_{1} vs tiempo",'FontSize',14);
+xlabel("Tiempo [s]",'FontSize',12);
+ylabel("\tau [Nm]",'FontSize',12);
+xlim([paso(1) paso(end-2)])
 
+figure(14)
+plot(paso(1:end-2),torque_q2,'r','LineWidth',1.5);
+grid on;
+title("\tau_{2} vs tiempo",'FontSize',14);
+xlabel("Tiempo [s]",'FontSize',12);
+ylabel("\tau [Nm]",'FontSize',12);
+xlim([paso(1) paso(end-2)])
 
-
-
-
-
-
-
-
+disp("El torque q1 máximo es: ");
+disp(max(torque_q1));
+disp("El torque RMS q1 es: ");
+disp(rms(torque_q1))
+disp("--------------------------------------");
+disp("El torque q2 máximo es: ");
+disp(max(torque_q2));
+disp("El torque RMS q2 es: ");
+disp(rms(torque_q2));
 
 
 %%
