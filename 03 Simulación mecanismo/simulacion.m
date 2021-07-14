@@ -205,7 +205,7 @@ xlim([paso(1) paso(end-2)])
 %% Torques:
 
 j1 = 0.00024769; % kg m^2
-j2 = 0.00086777; % kg m^2
+j2 = 0.00034068; % kg m^2
 
 % Torque inerciales q1:
 figure(11)
@@ -234,7 +234,7 @@ torque_friccion_q2 = ones(length(torque_inercial_q2),1)*max(torque_inercial_q2)*
 
 % Torque Gravitacional:
 m1 = 0.01342415; % kg
-m2 = 0.02008596; % kg
+m2 = 0.00788560; % kg
 torque_g_q1 = ones(length(torque_inercial_q1),1)*(l1/2)*(m1*9.81);
 torque_g_q2 = ones(length(torque_inercial_q2),1)*(l2/2)*(m2*9.81);
 
