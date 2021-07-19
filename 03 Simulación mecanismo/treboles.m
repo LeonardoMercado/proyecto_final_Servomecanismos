@@ -8,8 +8,8 @@ close all;
 % TREBOLES:
 t = 0:0.001:2*pi; % Paso
 % Trébol 15 cm a 0°
-x1 = (0.075*cos(t)-0.012*cos(5*t))+0.382;
-y1 = (0.075*sin(t)-0.012*sin(5*t))+0.204;
+x1 = (0.075*cos(t)-0.012*cos(5*t));
+y1 = (0.075*sin(t)-0.012*sin(5*t));
 % Trébol 15 cm a 45°
 x1_a = 0.075*cos(t)-0.012*cos(5*t+pi);
 y1_a = 0.075*sin(t)-0.012*sin(5*t+pi);

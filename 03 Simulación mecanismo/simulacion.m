@@ -6,11 +6,11 @@ close all;
 
 
 %--------------------------------------------------------------------------
-% Realizando el trébol:
+% Realizando el trébol
 t = 0:0.001:2*pi; % Paso en posición
 paso_trebol_normal = 0:0.001744112:10.96; % pasos en tiempo
 paso_trebol_expandido = 0:0.002278803:14.32;
-trebol = 4;
+trebol = 2;
 % trebol 1 = Trébol 15 cm a 0°
 % trebol 2 = Trébol 15 cm a 45°
 % trebol 3 = Trébol 19.5 cm a 0°
@@ -99,19 +99,6 @@ end
 for c = 1:100:length(x)
     mecanismo.plot([t_q1(c) t_q2(c)]); 
 end
-
-%% Funciones de referencia para el robot
-paso_normal_desp=paso_trebol_normal+1;
-paso_expan_desp=paso_trebol_expandido+1;
-
-%Trebol normal
-Treb_norm1 = [0 -0.7854;0.5 -0.7854;(0.5:0.08:1)' tg(:,1) ;paso_normal_desp' t_q1]; 
-Treb_norm2 = [0 2.3562;0.5 2.3562;(0.5:0.08:1)' tg(:,2) ;paso_normal_desp' t_q2]; 
-%Trebol expandido
-Treb_expa1 = [0 -0.7854;0.5 -0.7854;(0.5:0.08:1)' tg(:,1) ;paso_expan_desp' t_q1]; 
-Treb_expa2 = [0 2.3562;0.5 2.3562;(0.5:0.08:1)' tg(:,2) ;paso_expan_desp' t_q2]; 
-
-
 %% Sacando las curvas:
 
 % Articulación q1:
@@ -223,7 +210,7 @@ j2 = 0.00034068; % kg m^2
 % Torque inerciales q1:
 figure(11)
 torque_inercial_q1 = j1*alfa_q1;
-plot(paso(1:end-2),alfa_q1,'b','LineWidth',1.5);
+plot(paso(1:end-2),torque_inercial_q1,'b','LineWidth',1.5);
 grid on;
 title("\tau_{inercial1} vs tiempo",'FontSize',14);
 xlabel("Tiempo [s]",'FontSize',12);
@@ -234,7 +221,7 @@ xlim([paso(1) paso(end-2)])
 % Torque inercial q2:
 figure(12)
 torque_inercial_q2 = j2*alfa_q2;
-plot(paso(1:end-2),alfa_q2,'b','LineWidth',1.5);
+plot(paso(1:end-2),torque_inercial_q2,'b','LineWidth',1.5);
 grid on;
 title("\tau_{inercial2} vs tiempo",'FontSize',14);
 xlabel("Tiempo [s]",'FontSize',12);
