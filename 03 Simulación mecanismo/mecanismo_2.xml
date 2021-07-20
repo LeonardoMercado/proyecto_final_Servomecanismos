@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<SimscapeMultibodyImportXML version="2.0" xmlns="urn:mathworks:SimscapeMultibody:import" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Created by="Leonardo Fabio Mercado Benítez" on="07/19/21||19:47:32" using="Simscape Multibody Link Version 7.2" from="Autodesk Inventor 2021 (Build 250183000, 183)"/>
+<ModelUnits mass="lbmass" length="meter"/>
+<DataUnits mass="kilogram" length="centimeter"/>
+<RootAssembly name="mecanismo.iam" uid="mecanismo.iam_{F3DE2A44-43F3-47E6-FD8B-7D902D8CE4EE}" version="{887C4FE0-533D-D3C9-6C23-5C63A58AED41}">
+<AssemblyFile name="mecanismo.iam" type="Inventor Assembly"/>
+<InstanceTree>
+<Instance name="base:1" grounded="true" uid="base:1" entityUid="base.ipt_{94E39296-4A4C-1257-227A-33B0EDD10A4A}">
+<Transform>
+<Rotation>0.99999999999999967 -1.6653345369377326e-16 0 6.6613381477509383e-16 0.99999999999999911 0 0 0 0.99999999999999878</Rotation>
+<Translation>4.4408920985006262e-16 0 -0.12967919867214639</Translation>
+</Transform>
+</Instance>
+<Instance name="eslabon_1:1" uid="eslabon_1:1" entityUid="eslabon_1.ipt_{AD2576BF-476E-96C8-9A80-29B3107F29A2}">
+<Transform>
+<Rotation>0.62786172084585634 0.77832490612627825 0 -0.77832490612627825 0.62786172084585634 0 0 0 1</Rotation>
+<Translation>4.9395591458379767e-16 0 0.57032080132785257</Translation>
+</Transform>
+</Instance>
+<Instance name="eslasbon_2:1" uid="eslasbon_2:1" entityUid="eslasbon_2.ipt_{41E195E8-43BB-CEE8-2A62-AC8D61AE3B04}">
+<Transform>
+<Rotation>0.0065744950106304397 -0.99997838777413361 0 0.99997838777413361 0.0065744950106304406 0 0 0 1.0000000000000002</Rotation>
+<Translation>15.068681300300552 -18.679797747030683 0.88782080132785079</Translation>
+</Transform>
+</Instance>
+</InstanceTree>
+<Constraints>
+<Coincident name="Coincidencia:1">
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>base:1</Uid>
+</InstancePath>
+<Position>0 0 0.69999999999999996</Position>
+<Axis>0 0 -1.0000000000000011</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="line">
+<Position>0 0 -1</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincidencia:2">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>eslabon_1:1</Uid>
+</InstancePath>
+<Position>11.999999999999998 5.0372022885117091e-16 0</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>base:1</Uid>
+</InstancePath>
+<Position>1.5254083044323901e-16 -0.54125000000000056 0.70000000000000084</Position>
+<Axis>-1.6838266427432279e-16 0 1.0000000000000011</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincidencia:3">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>eslabon_1:1</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>base:1</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>-1.6838266427432279e-16 0 1.0000000000000011</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincidencia:4">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>eslasbon_2:1</Uid>
+</InstancePath>
+<Position>18.200000000000003 -1.7763568394002505e-15 1.1102230246251565e-16</Position>
+<Axis>0 0 0.99999999999999978</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>eslabon_1:1</Uid>
+</InstancePath>
+<Position>11.999999999999998 5.278477465991808e-16 0.3175</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincidencia:5">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>eslasbon_2:1</Uid>
+</InstancePath>
+<Position>0 -1.7763568394002505e-15 0</Position>
+<Axis>0 0 -0.99999999999999978</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>eslabon_1:1</Uid>
+</InstancePath>
+<Position>23.999999999999996 -3.6033067310094443e-16 0.3175</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+</Coincident>
+</Constraints>
+<Joints>
+</Joints>
+</RootAssembly>
+<Assemblies>
+</Assemblies>
+<Parts>
+<Part name="base.ipt" uid="base.ipt_{94E39296-4A4C-1257-227A-33B0EDD10A4A}" version="{79A710F0-E8A6-50C7-57D6-5EAA9AD5A807}">
+<PartFile name="base.ipt" type="Inventor Part"/>
+<MassProperties>
+<Mass>0.0012062892977108646</Mass>
+<CenterOfMass>6.1015409452108452e-12 -0.8105354204506845 0.35000000000000003</CenterOfMass>
+<Inertia>0.00031362381971362441 0.00020552769946941148 0.00042063789320331504 0 0 -5.9659439276302943e-15</Inertia>
+</MassProperties>
+<GeometryFile name="base_ipt_6039878e.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.74901960784313726" g="0.74901960784313726" b="0.74901960784313726" a="1"/>
+<Diffuse r="0.74901960784313726" g="0.74901960784313726" b="0.74901960784313726" a="1"/>
+<Specular r="0" g="0" b="0" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.14999999999999999</Shininess>
+</VisualProperties>
+</Part>
+<Part name="eslabon_1.ipt" uid="eslabon_1.ipt_{AD2576BF-476E-96C8-9A80-29B3107F29A2}" version="{B0D4FAF2-EDB8-966F-C9BB-D60DA9061BED}">
+<ModelUnits mass="kilogram" length="meter"/>
+<PartFile name="eslabon_1.ipt" type="Inventor Part"/>
+<MassProperties>
+<Mass>0.013424150129858169</Mass>
+<CenterOfMass>11.576646832048985 0 0.14810494716795808</CenterOfMass>
+<Inertia>0.00063876978902782904 0.67755836026894467 0.67781101132363875 0 -0.0016543119472663364 0</Inertia>
+</MassProperties>
+<GeometryFile name="eslabon_1_ipt_b9ed509b.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.99607843137254903" g="0.99607843137254903" b="1" a="1"/>
+<Diffuse r="0.99607843137254903" g="0.99607843137254903" b="1" a="1"/>
+<Specular r="0.99607843137254903" g="0.99607843137254903" b="1" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.59200000762939453</Shininess>
+</VisualProperties>
+</Part>
+<Part name="eslasbon_2.ipt" uid="eslasbon_2.ipt_{41E195E8-43BB-CEE8-2A62-AC8D61AE3B04}" version="{EED4BC97-0D2B-7124-A6BE-C802053C8121}">
+<ModelUnits mass="kilogram" length="meter"/>
+<PartFile name="eslasbon_2.ipt" type="Inventor Part"/>
+<MassProperties>
+<Mass>0.0078855994513064402</Mass>
+<CenterOfMass>17.850768257707795 0 0.15570381653357765</CenterOfMass>
+<Inertia>0.00033787385142519379 0.89384914959831208 0.89403943018543353 0 -0.00042879299499088574 0</Inertia>
+</MassProperties>
+<GeometryFile name="eslasbon_2_ipt_9120571f.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.92156862745098034" g="0.92156862745098034" b="0.92156862745098034" a="1"/>
+<Diffuse r="0.92156862745098034" g="0.92156862745098034" b="0.92156862745098034" a="1"/>
+<Specular r="1" g="1" b="1" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.51500000000000001</Shininess>
+</VisualProperties>
+</Part>
+</Parts>
+</SimscapeMultibodyImportXML>

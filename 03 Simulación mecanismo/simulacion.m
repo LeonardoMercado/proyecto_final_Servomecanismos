@@ -10,7 +10,7 @@ close all;
 t = 0:0.001:2*pi; % Paso en posición
 paso_trebol_normal = 0:0.001744112:10.96; % pasos en tiempo
 paso_trebol_expandido = 0:0.002278803:14.32;
-trebol = 2;
+trebol = 4;
 % trebol 1 = Trébol 15 cm a 0°
 % trebol 2 = Trébol 15 cm a 45°
 % trebol 3 = Trébol 19.5 cm a 0°
